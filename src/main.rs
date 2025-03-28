@@ -1,32 +1,14 @@
 #![no_std]
 #![no_main]
 
-#[no_mangle]
-pub fn _critical_section_1_0_acquire() -> bool {
-    use core::sync::atomic;
-    // the i bit means "masked"
-    let was_active = !cortex_ar::register::Cpsr::read().i();
-    cortex_ar::interrupt::disable();
-    atomic::compiler_fence(atomic::Ordering::SeqCst);
-    was_active
-}
-
-#[no_mangle]
-pub fn _critical_section_1_0_release(was_active: bool) {
-    use core::sync::atomic;
-    // Only re-enable interrupts if they were enabled before the critical section.
-    if was_active {
-        atomic::compiler_fence(atomic::Ordering::SeqCst);
-        // Safety: This is OK because we're releasing a lock that was
-        // entered with interrupts enabled
-        unsafe {
-            cortex_ar::interrupt::enable();
-        }
-    }
-}
-
 use flash_algorithm::*;
 use rtt_target::{rprintln, rtt_init_print};
+
+// Import the `cortex_ar` crate. This is necessary to tell the compiler that we do
+// use this crate, even if we don't call any functions from inside it. Without this,
+// critical section code would be unavailable, leading to opaque errors such as
+// `undefined symbol: _critical_section_1_0_acquire`.
+use cortex_ar as _;
 
 struct Algorithm;
 
