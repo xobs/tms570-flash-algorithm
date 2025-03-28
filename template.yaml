@@ -1,0 +1,62 @@
+name: TMS570
+manufacturer:
+  id: 0x17
+  cc: 0x0
+variants:
+- name: TMS570LC4357
+  cores:
+  - name: core0
+    type: armv7a
+    # DPv0
+    core_access_options: !Arm
+      ap: !v1 1
+      debug_base: 0x80001000
+  memory_map:
+  - !Nvm
+    range:
+      start: 0x0
+      end: 0x400000
+    cores:
+    - core0
+    access:
+      boot: true
+  - !Ram
+    range:
+      start: 0x08000000
+      end: 0x08080000
+    cores:
+    - core0
+  flash_algorithms:
+    - tms570
+  jtag:
+    scan_chain:
+    - name: core0
+      ir_len: 4
+    - name: ICEPICK
+      ir_len: 6
+flash_algorithms:
+  - name: tms570
+    description: A flash algorithm under test
+    default: true
+    instructions: 
+    pc_init: 0x0
+    pc_uninit: 0x0
+    pc_program_page: 0x0
+    pc_erase_sector: 0x0
+    pc_erase_all: 0x0
+    data_section_offset: 0x0
+    load_address: 0x08020000
+    flash_properties:
+      address_range:
+        start: 0x0
+        end: 0x0
+      page_size: 0x0
+      erased_byte_value: 0x0
+      program_page_timeout: 0x0
+      erase_sector_timeout: 0x0
+      sectors:
+        - size: 0x0
+          address: 0x0
+    cores:
+      - main
+    stack_size: 4096
