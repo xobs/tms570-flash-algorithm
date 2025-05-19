@@ -555,7 +555,7 @@ impl FlashAlgorithm for Algorithm {
             f021::flush();
 
             // Run a blank check just to be sure.
-            self.blank_check(sector.address, sector.size)?;
+            self.custom_blank_check(sector.address, sector.size)?;
 
             rprintln!("Sector erased");
             return Ok(());
@@ -609,7 +609,7 @@ impl FlashAlgorithm for Algorithm {
         Ok(())
     }
 
-    fn blank_check(&mut self, mut address: u32, mut size: u32) -> Result<(), ErrorCode> {
+    fn custom_blank_check(&mut self, mut address: u32, mut size: u32) -> Result<(), ErrorCode> {
         // Run a blank check. OR a `1` into the resulting address in case address
         // 0 is not blank.
         while f021::fsm_running() == FsmStatus::Busy {}
