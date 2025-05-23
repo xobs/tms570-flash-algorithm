@@ -3,7 +3,7 @@ manufacturer:
   id: 0x17
   cc: 0x0
 variants:
-- name: TMS570LC4357
+- name: TMS570LC43X
   cores:
   - name: core0
     type: armv7a

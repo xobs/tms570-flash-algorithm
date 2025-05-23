@@ -1,7 +1,5 @@
 #![allow(dead_code)]
 
-use rtt_target::rprintln;
-
 mod sys;
 
 #[derive(Debug, PartialEq)]
@@ -618,7 +616,6 @@ pub fn blank_check(address: u32, size: u32) -> Result<(), FlashStatus> {
     }
     .try_into();
     if status.is_err() {
-        rprintln!("Error performing blank check: {:?}", status);
         Err(FlashStatus {
             non_blank_address: flash_status.au32StatusWord[0],
             non_blank_data: flash_status.au32StatusWord[1],
