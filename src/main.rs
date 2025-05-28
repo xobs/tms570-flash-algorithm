@@ -554,9 +554,6 @@ impl FlashAlgorithm for Algorithm {
 
             f021::flush();
 
-            // Run a blank check just to be sure.
-            self.blank_check(sector.address, sector.size, 0)?;
-
             rprintln!("Sector erased");
             return Ok(());
         }
