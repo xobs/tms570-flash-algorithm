@@ -1,0 +1,2 @@
+mon rtt ram 0x08025900 0x8025940
+set $segger=0x08025900
